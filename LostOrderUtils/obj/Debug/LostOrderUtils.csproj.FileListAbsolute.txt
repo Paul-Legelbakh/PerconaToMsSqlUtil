@@ -1,0 +1,14 @@
+F:\!!!!!~Users\dMilyutin\Projects\LostOrderUtils\LostOrderUtils\bin\Debug\LostOrderUtils.exe.config
+F:\!!!!!~Users\dMilyutin\Projects\LostOrderUtils\LostOrderUtils\bin\Debug\LostOrderUtils.exe
+F:\!!!!!~Users\dMilyutin\Projects\LostOrderUtils\LostOrderUtils\bin\Debug\LostOrderUtils.pdb
+F:\!!!!!~Users\dMilyutin\Projects\LostOrderUtils\LostOrderUtils\obj\Debug\LostOrderUtils.csprojResolveAssemblyReference.cache
+F:\!!!!!~Users\dMilyutin\Projects\LostOrderUtils\LostOrderUtils\obj\Debug\LostOrderUtils.Properties.Resources.resources
+F:\!!!!!~Users\dMilyutin\Projects\LostOrderUtils\LostOrderUtils\obj\Debug\LostOrderUtils.csproj.GenerateResource.Cache
+F:\!!!!!~Users\dMilyutin\Projects\LostOrderUtils\LostOrderUtils\obj\Debug\LostOrderUtils.csproj.CoreCompileInputs.cache
+F:\!!!!!~Users\dMilyutin\Projects\LostOrderUtils\LostOrderUtils\obj\Debug\LostOrderUtils.exe
+F:\!!!!!~Users\dMilyutin\Projects\LostOrderUtils\LostOrderUtils\obj\Debug\LostOrderUtils.pdb
+F:\!!!!!~Users\dMilyutin\Projects\LostOrderUtils\LostOrderUtils\bin\Debug\Newtonsoft.Json.dll
+F:\!!!!!~Users\dMilyutin\Projects\LostOrderUtils\LostOrderUtils\bin\Debug\Newtonsoft.Json.xml
+F:\!!!!!~Users\dMilyutin\Projects\LostOrderUtils\LostOrderUtils\bin\Debug\Json.dll
+F:\!!!!!~Users\dMilyutin\Projects\LostOrderUtils\LostOrderUtils\bin\Debug\Json.pdb
+F:\!!!!!~Users\dMilyutin\Projects\LostOrderUtils\LostOrderUtils\obj\Debug\LostOrderUtils.LostOrderToOrderUtil.resources
