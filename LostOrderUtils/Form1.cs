@@ -26,7 +26,15 @@ namespace LostOrderUtils
         public Percona2BpmOrdersSync()
         {
             InitializeComponent();
-            utilProperties = new UtilProperties
+            perconaPurchaseInfoList = new List<OrderAnswerInfo>();
+            perconaOrderList = new List<Order>();
+            bpmOrderInfoList = new List<OrderAnswerInfo>();
+            bpmOrderList = new List<Order>();
+            //ModelInit();
+        }
+        public UtilProperties utilPropertiesUpdate()
+        {
+            UtilProperties utilProperties = new UtilProperties
             {
                 MsDbName = inputMsName.Text,
                 MsServer = inputMsServer.Text,
@@ -36,21 +44,11 @@ namespace LostOrderUtils
                 MyServer = inputMyServer.Text,
                 MyLogin = inputMyLogin.Text,
                 MyPassword = inputMyPassword.Text,
-
-                startDate = Convert.ToDateTime(textBoxDateFrom.Text),
-                dueDate = Convert.ToDateTime(textBoxDateTo.Text)
-                //OrderModel = UtilityHelper.OrderModel,
-                //OrderProductModel = UtilityHelper.OrderProductModel,
-                //TransactionModel = UtilityHelper.TransactionModel
+                startDate = Convert.ToDateTime(textBoxDateFrom.Value),
+                dueDate = Convert.ToDateTime(textBoxDateTo.Value)
             };
-            perconaPurchaseInfoList = new List<OrderAnswerInfo>();
-            perconaOrderList = new List<Order>();
-            bpmOrderInfoList = new List<OrderAnswerInfo>();
-            bpmOrderList = new List<Order>();
-            //ModelInit();
+            return utilProperties;
         }
-
-        public UtilProperties utilProperties { get; set; }
 
         public List<OrderAnswerInfo> bpmOrderInfoList { get; set; }
 
@@ -65,6 +63,7 @@ namespace LostOrderUtils
         public bool GetProperties()
         {
             #region MsSql Connection String
+            var utilProperties = utilPropertiesUpdate();
             if (String.IsNullOrEmpty(inputMsServer.Text))
             {
                 if (String.IsNullOrEmpty(utilProperties.MsServer))
@@ -259,7 +258,6 @@ namespace LostOrderUtils
             perconaOrderList.Clear();
             bpmOrderList.Clear();
             perconaPurchaseInfoList.Clear();
-            dataDiff.Rows.Clear();
         }
 
         public void LogInfo(string Message)
@@ -286,6 +284,7 @@ namespace LostOrderUtils
         #region Events
         private void getMsSQLInfo_Click(object sender, EventArgs e)
         {
+            var utilProperties = utilPropertiesUpdate();
             string bpmConnection = String.Format(ModelReader.bpmConnectionStringFormat, utilProperties.MsServer, utilProperties.MsDbName,
                     utilProperties.MsLogin, utilProperties.MsPassword);
             using (SqlConnection sqlConnection = new SqlConnection(bpmConnection))
@@ -293,17 +292,18 @@ namespace LostOrderUtils
                 sqlConnection.Open();
                 if (sqlConnection.State == ConnectionState.Closed)
                 {
-                    LogInfo("MSSQL connection error!");
+                    LogInfo("MsSQL connection error!");
                 }
                 else if (sqlConnection.State == ConnectionState.Open)
                 {
-                    LogInfo("MSSQL connection passed!");
+                    LogInfo("MsSQL connection passed!");
                 }
             }
         }
 
         private void getPerconaInfo_Click(object sender, EventArgs e)
         {
+            var utilProperties = utilPropertiesUpdate();
             string perconaConnection = String.Format(ModelReader.perconaConnectionStringFormat, utilProperties.MyServer, utilProperties.MyDbName,
                 utilProperties.MyLogin, utilProperties.MyPassword);
             using (MySqlConnection MyConnection = new MySqlConnection(perconaConnection))
@@ -322,79 +322,84 @@ namespace LostOrderUtils
 
         private async void buttomFromMsToMy_Click(object sender, EventArgs e)
             {
-                #region Properties
-                //if (!GetProperties())
-                //{
-                //    return;
-                //}
-                //GetEntityChecked();
-                //if (!(utilProperties.PushOrder || utilProperties.PushOrderProduct || utilProperties.PushTransaction))
-                //{
-                //    MessageBox.Show("Check Entity!");
-                //    return;
-                //}
+            #region Properties
+            //if (!GetProperties())
+            //{
+            //    return;
+            //}
+            //GetEntityChecked();
+            //if (!(utilProperties.PushOrder || utilProperties.PushOrderProduct || utilProperties.PushTransaction))
+            //{
+            //    MessageBox.Show("Check Entity!");
+            //    return;
+            //}
 
-                //if (bpmOrderInfoList.Count < 1)
-                //{
-                //    MessageBox.Show("Bpm diff collection is empty!", "Error", 0);
-                //    LogInfo("Bpm diff is empty");
-                //    return;
-                //}
-                //if (bpmOrderInfoList.Count > 1000)
-                //{
-                //    DialogResult result = MessageBox.Show("Bpm diff collection count > 1000. Continue?", "Error", MessageBoxButtons.YesNo);
-                //    LogInfo("Bpm diff collection count > 1000");
-                //    if (result == DialogResult.No)
-                //    {
-                //        LogInfo("Canseled");
-                //        return;
-                //    }
-                //    else
-                //    {
-                //        LogInfo("Continued");
-                //    }
-                //}
-                #endregion
-                string bpmConnection = String.Format(ModelReader.bpmConnectionStringFormat, utilProperties.MsServer, utilProperties.MsDbName,
-                    utilProperties.MsLogin, utilProperties.MsPassword);
-                string perconaConnection = String.Format(ModelReader.perconaConnectionStringFormat, utilProperties.MyServer, utilProperties.MyDbName,
-                    utilProperties.MyLogin, utilProperties.MyPassword);
+            //if (bpmOrderInfoList.Count < 1)
+            //{
+            //    MessageBox.Show("Bpm diff collection is empty!", "Error", 0);
+            //    LogInfo("Bpm diff is empty");
+            //    return;
+            //}
+            //if (bpmOrderInfoList.Count > 1000)
+            //{
+            //    DialogResult result = MessageBox.Show("Bpm diff collection count > 1000. Continue?", "Error", MessageBoxButtons.YesNo);
+            //    LogInfo("Bpm diff collection count > 1000");
+            //    if (result == DialogResult.No)
+            //    {
+            //        LogInfo("Canseled");
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        LogInfo("Continued");
+            //    }
+            //}
+            #endregion
+            var utilProperties = utilPropertiesUpdate();
+            string bpmConnection = String.Format(ModelReader.bpmConnectionStringFormat, utilProperties.MsServer, utilProperties.MsDbName,
+                utilProperties.MsLogin, utilProperties.MsPassword);
+            string perconaConnection = String.Format(ModelReader.perconaConnectionStringFormat, utilProperties.MyServer, utilProperties.MyDbName,
+                utilProperties.MyLogin, utilProperties.MyPassword);
 
-                startDate = Convert.ToDateTime(textBoxDateFrom.Text);
-                dueDate = Convert.ToDateTime(textBoxDateTo.Text);
-                if (jsonEntities.Count == 0)
+            startDate = Convert.ToDateTime(textBoxDateFrom.Text);
+            dueDate = Convert.ToDateTime(textBoxDateTo.Text);
+            if (jsonEntities.Count == 0)
+            {
+                LogInfo("Configuration file is empty or is not checked!");
+                return;
+            }
+
+            int count = operations.ProgressBarDataFromMsSql(bpmConnection, jsonEntities, startDate, dueDate);
+            label3.Text = count.ToString();
+            progressBar1.Maximum = count;
+            if (count == 0)
+            {
+                LogInfo("----- Data is not available (STOP)");
+                return;
+            }
+            try
+            {
+                for (int i = 0; i < jsonEntities.Count; i++)
                 {
-                    LogInfo("Configuration file is empty or is not checked!");
-                    return;
-                }
-
-                label3.Text = "0";
-                int count = operations.ProgressBarDataFromMsSql(bpmConnection, jsonEntities, startDate, dueDate);
-                label3.Text = count.ToString();
-                progressBar1.Maximum = count;
-
-                try
-                {
-                    for (int i = 0; i < jsonEntities.Count; i++)
+                    List<string> insertData = new List<string>();
+                    int offset = 0, limit = 100;
+                    do
                     {
-                        List<string> insertData = new List<string>();
-                        int offset = 0, limit = 100;
-                        do
-                        {
-                            insertData = await Task.Run(() => operations.GetMsSqlData(bpmConnection, jsonEntities[i], startDate, dueDate, offset, limit));
-                            await Task.Run(() => operations.PushMsSqlToMySql(perconaConnection, jsonEntities[i], insertData));
-                            offset += limit;
-                            progressBar1.PerformStep();
-                        }
-                        while (insertData.Count == limit);
+                        insertData = await Task.Run(() => operations.GetMsSqlData(bpmConnection, jsonEntities[i], startDate, dueDate, offset, limit));
+                        await Task.Run(() => operations.PushMsSqlToMySql(perconaConnection, jsonEntities[i], insertData));
+                        offset += limit;
+                        progressBar1.PerformStep();
                     }
-                    progressBar1.Value = 0;
-                    MessageBox.Show("----- Process is complete -----");
+                    while (insertData.Count == limit);
                 }
-                catch (Exception ex)
-                {
-                    LogInfo(ex);
-                }
+                progressBar1.Value = 0;
+                label3.Text = "0";
+                MessageBox.Show("----- Process is complete -----");
+            }
+            catch (Exception ex)
+            {
+                LogInfo(ex);
+            }
             #region Comments
             //perconaOrderList.Clear();
             //if (utilProperties.PushOrder)
@@ -475,6 +480,7 @@ namespace LostOrderUtils
             //string perconaConnection = String.Format(ModelReader.perconaConnectionStringFormat, utilProperties.MyServer, utilProperties.MyDbName,
             //    utilProperties.MyLogin, utilProperties.MyPassword);
             #endregion
+            var utilProperties = utilPropertiesUpdate();
             string bpmConnection = String.Format(ModelReader.bpmConnectionStringFormat, utilProperties.MsServer, utilProperties.MsDbName,
                     utilProperties.MsLogin, utilProperties.MsPassword);
             string perconaConnection = String.Format(ModelReader.perconaConnectionStringFormat, utilProperties.MyServer, utilProperties.MyDbName,
@@ -488,12 +494,14 @@ namespace LostOrderUtils
                 LogInfo("Configuration file is empty or is not checked!");
                 return;
             }
-
-            label4.Text = "0";
             int count = operations.ProgressBarDataFromMySql(perconaConnection, jsonEntities, startDate, dueDate);
             label4.Text = count.ToString();
             progressBar1.Maximum = count;
-
+            if (count == 0)
+            {
+                LogInfo("----- Data is not available (STOP)");
+                return;
+            }
             try
             {
                 for (int i = 0; i < jsonEntities.Count; i++)
@@ -509,6 +517,9 @@ namespace LostOrderUtils
                     }
                     while (insertData.Count == limit);
                 }
+                progressBar1.Value = 0;
+                label4.Text = "0";
+                MessageBox.Show("----- Process is complete -----");
             }
             catch (Exception ex)
             {
@@ -561,30 +572,38 @@ namespace LostOrderUtils
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             //----- Checked files with .json format
             openFileDialog1.Filter = "json files (*.json)|*.json|All files (*.*)|*.*";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 textBoxDllAddress.Text = openFileDialog1.FileName;
-                ModelReader.importDll = textBoxDllAddress.Text;
+                ModelReader.importConfig = textBoxDllAddress.Text;
                 try
                 {
                     //----- Reading config.JSON
-                    jsonEntities = operations.LoadJson(ModelReader.importDll);
+                    jsonEntities = operations.LoadJson(ModelReader.importConfig);
                 } catch (Exception ex)
                 {
                     MessageBox.Show("Incorrect file directory!");
                     throw ex;
                 }
             }
-            button3.Enabled = true;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             LogInfo("This function in progress of developing");
+        }
+
+        private void inputMsName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelDateFrom_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

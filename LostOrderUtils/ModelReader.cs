@@ -23,7 +23,7 @@ namespace LostOrderUtils
 
     public class ModelReader
     {
-        public static string importDll = "";
+        public static string importConfig = "";
 
         public static readonly string bpmConnectionStringFormat = "Data Source={0}; Initial Catalog={1}; Persist Security Info=True; MultipleActiveResultSets=True; User ID={2}; Password={3}; Pooling = true; Max Pool Size = 100; Async = true";
 
@@ -89,7 +89,7 @@ namespace LostOrderUtils
                     {
                         dbConnection.Open();
                         string sqlQuery = String.Format(@"SELECT COUNT(Id) FROM {0} WHERE (ModifiedOn BETWEEN '{1}' AND '{2}')",
-                        jsonEntities[i].mssql, startDate.ToString("yyyy-MM-dd"), dueDate.ToString("yyyy-MM-dd"));
+                        jsonEntities[i].mysql, startDate.ToString("yyyy-MM-dd"), dueDate.ToString("yyyy-MM-dd"));
                         using (MySqlCommand command = new MySqlCommand(sqlQuery, dbConnection))
                         {
                             try
@@ -126,9 +126,8 @@ namespace LostOrderUtils
             JsonEntity jsonEntity, DateTime startDate, DateTime dueDate, int offset = 0, int limit = 100)
         {
             string tablesMySqlString = string.Join(",", jsonEntity.fields.Values);
-            string sqlQuery = String.Format(@"SELECT {0} FROM {1} WHERE (ModifiedOn BETWEEN '{2}' AND '{3}') 
-                                            ORDER BY ModifiedOn ASC LIMIT {4} OFFSET {5}",
-                                            tablesMySqlString, jsonEntity.mssql, startDate.ToString("yyyy-MM-dd"),
+            string sqlQuery = String.Format(@"SELECT {0} FROM {1} WHERE (ModifiedOn BETWEEN '{2}' AND '{3}') ORDER BY ModifiedOn ASC LIMIT {4} OFFSET {5}",
+                                            tablesMySqlString, jsonEntity.mysql, startDate.ToString("yyyy-MM-dd"),
                                             dueDate.ToString("yyyy-MM-dd"), limit, offset);
             List<string> rows = new List<string>();
 
@@ -215,8 +214,8 @@ namespace LostOrderUtils
                     for (int i = 0; i < mySqlData.Count; i++)
                     {
                         Console.WriteLine(mySqlData[i]);
-                        string sqlQuery = String.Format(@"INSERT INTO {0} ({1}) VALUES ({2});",
-                        jsonEntity.mysql, tablesMsSqlString, mySqlData[i]);
+                        string sqlQuery = String.Format(@"INSERT INTO dbo.[{0}] ({1}) VALUES ({2});",
+                        jsonEntity.mssql, tablesMsSqlString, mySqlData[i]);
                         using (SqlCommand command = new SqlCommand(sqlQuery, dbConnection))
                         {
                             try
@@ -248,8 +247,7 @@ namespace LostOrderUtils
         {
 
             string tablesMsSqlString = string.Join(",", jsonEntity.fields.Keys);
-            string sqlQuery = String.Format(@"SELECT {0} FROM {1} WHERE (ModifiedOn BETWEEN '{2}' AND '{3}') 
-                                            ORDER BY ModifiedOn ASC OFFSET {4} ROWS FETCH NEXT {5} ROWS ONLY",
+            string sqlQuery = String.Format(@"SELECT {0} FROM dbo.[{1}] WHERE (ModifiedOn BETWEEN '{2}' AND '{3}') ORDER BY ModifiedOn ASC OFFSET {4} ROWS FETCH NEXT {5} ROWS ONLY",
                                             tablesMsSqlString, jsonEntity.mssql, startDate.ToString("yyyy-MM-dd"),
                                             dueDate.ToString("yyyy-MM-dd"), offset, limit);
             List<string> rows = new List<string>();
