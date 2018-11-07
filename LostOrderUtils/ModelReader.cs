@@ -44,7 +44,7 @@ namespace LostOrderUtils
                     for (int i = 0; i < jsonEntities.Count; i++)
                     {
                         dbConnection.Open();
-                        string sqlQuery = String.Format(@"SELECT COUNT(Id) FROM {0} WHERE (ModifiedOn BETWEEN '{1}' AND '{2}')",
+                        string sqlQuery = String.Format(@"SELECT COUNT(Id) FROM dbo.[{0}] WHERE (ModifiedOn BETWEEN '{1}' AND '{2}')",
                         jsonEntities[i].mssql, startDate.ToString("yyyy-MM-dd"), dueDate.ToString("yyyy-MM-dd"));
                         using (SqlCommand command = new SqlCommand(sqlQuery, dbConnection))
                         {

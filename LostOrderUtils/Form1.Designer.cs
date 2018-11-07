@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Percona2BpmOrdersSync));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.inputMsServer = new System.Windows.Forms.TextBox();
+            this.textBoxDateTo = new System.Windows.Forms.DateTimePicker();
+            this.textBoxDateFrom = new System.Windows.Forms.DateTimePicker();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.textBoxDllAddress = new System.Windows.Forms.TextBox();
             this.logInfoDataGrid = new System.Windows.Forms.DataGridView();
@@ -58,9 +61,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBoxDateFrom = new System.Windows.Forms.DateTimePicker();
-            this.textBoxDateTo = new System.Windows.Forms.DateTimePicker();
-            this.inputMsServer = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logInfoDataGrid)).BeginInit();
@@ -97,6 +97,31 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Properties";
+            // 
+            // inputMsServer
+            // 
+            this.inputMsServer.Font = new System.Drawing.Font("Georgia", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.inputMsServer.Location = new System.Drawing.Point(126, 32);
+            this.inputMsServer.Name = "inputMsServer";
+            this.inputMsServer.Size = new System.Drawing.Size(183, 25);
+            this.inputMsServer.TabIndex = 21;
+            this.inputMsServer.Text = "dp-crmdbtest-01";
+            // 
+            // textBoxDateTo
+            // 
+            this.textBoxDateTo.Location = new System.Drawing.Point(465, 126);
+            this.textBoxDateTo.Name = "textBoxDateTo";
+            this.textBoxDateTo.Size = new System.Drawing.Size(183, 25);
+            this.textBoxDateTo.TabIndex = 20;
+            this.textBoxDateTo.Value = new System.DateTime(2018, 11, 1, 0, 0, 0, 0);
+            // 
+            // textBoxDateFrom
+            // 
+            this.textBoxDateFrom.Location = new System.Drawing.Point(126, 126);
+            this.textBoxDateFrom.Name = "textBoxDateFrom";
+            this.textBoxDateFrom.Size = new System.Drawing.Size(183, 25);
+            this.textBoxDateFrom.TabIndex = 19;
+            this.textBoxDateFrom.Value = new System.DateTime(2018, 10, 1, 0, 0, 0, 0);
             // 
             // progressBar1
             // 
@@ -179,7 +204,7 @@
             this.inputMyServer.Name = "inputMyServer";
             this.inputMyServer.Size = new System.Drawing.Size(183, 25);
             this.inputMyServer.TabIndex = 13;
-            this.inputMyServer.Text = "192.168.0.202";
+            this.inputMyServer.Text = "10.1.208.97";
             // 
             // inputMyName
             // 
@@ -188,7 +213,7 @@
             this.inputMyName.Name = "inputMyName";
             this.inputMyName.Size = new System.Drawing.Size(183, 25);
             this.inputMyName.TabIndex = 12;
-            this.inputMyName.Text = "prodMdGroup";
+            this.inputMyName.Text = "prostor_test";
             // 
             // labelMyDBName
             // 
@@ -259,7 +284,7 @@
             this.inputMsName.Name = "inputMsName";
             this.inputMsName.Size = new System.Drawing.Size(183, 25);
             this.inputMsName.TabIndex = 2;
-            this.inputMsName.Text = "mdgroup-dev";
+            this.inputMsName.Text = "prostor_test";
             this.inputMsName.TextChanged += new System.EventHandler(this.inputMsName_TextChanged);
             // 
             // labelMsDBName
@@ -389,31 +414,6 @@
             this.label4.Size = new System.Drawing.Size(13, 13);
             this.label4.TabIndex = 18;
             this.label4.Text = "0";
-            // 
-            // textBoxDateFrom
-            // 
-            this.textBoxDateFrom.Location = new System.Drawing.Point(126, 126);
-            this.textBoxDateFrom.Name = "textBoxDateFrom";
-            this.textBoxDateFrom.Size = new System.Drawing.Size(183, 25);
-            this.textBoxDateFrom.TabIndex = 19;
-            this.textBoxDateFrom.Value = new System.DateTime(2018, 10, 1, 0, 0, 0, 0);
-            // 
-            // textBoxDateTo
-            // 
-            this.textBoxDateTo.Location = new System.Drawing.Point(465, 126);
-            this.textBoxDateTo.Name = "textBoxDateTo";
-            this.textBoxDateTo.Size = new System.Drawing.Size(183, 25);
-            this.textBoxDateTo.TabIndex = 20;
-            this.textBoxDateTo.Value = new System.DateTime(2018, 11, 1, 0, 0, 0, 0);
-            // 
-            // inputMsServer
-            // 
-            this.inputMsServer.Font = new System.Drawing.Font("Georgia", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.inputMsServer.Location = new System.Drawing.Point(126, 32);
-            this.inputMsServer.Name = "inputMsServer";
-            this.inputMsServer.Size = new System.Drawing.Size(183, 25);
-            this.inputMsServer.TabIndex = 21;
-            this.inputMsServer.Text = "WIN-BEAA7MI3J3O\\MSSQLSERVER2016";
             // 
             // pictureBox1
             // 
