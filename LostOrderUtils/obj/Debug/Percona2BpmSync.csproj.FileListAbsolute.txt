@@ -103,4 +103,3 @@ C:\Users\dev-2\Desktop\PerconaToMsSqlUtil\LostOrderUtils\obj\Debug\Percona2BpmSy
 C:\Users\dev-2\Desktop\PerconaToMsSqlUtil\LostOrderUtils\obj\Debug\Percona2BpmSync.csproj.CopyComplete
 C:\Users\dev-2\Desktop\PerconaToMsSqlUtil\LostOrderUtils\obj\Debug\LostOrderUtils.exe
 C:\Users\dev-2\Desktop\PerconaToMsSqlUtil\LostOrderUtils\obj\Debug\LostOrderUtils.pdb
-C:\Users\dev-2\Desktop\PerconaToMsSqlUtil\LostOrderUtils\obj\Debug\Percona2BpmSync.csprojAssemblyReference.cache
