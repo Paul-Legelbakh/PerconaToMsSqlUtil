@@ -27,6 +27,7 @@ namespace LostOrderUtils
         public DateTime startDate { get; set; }
 
         public DateTime dueDate { get; set; }
+        public int packageSize { get; set; }
 
         public Dictionary<string, bool> OrderModel { get; set; }
 

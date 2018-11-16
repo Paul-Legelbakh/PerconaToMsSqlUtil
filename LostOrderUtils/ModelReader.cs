@@ -43,13 +43,17 @@ namespace LostOrderUtils
                 {
                     for (int i = 0; i < jsonEntities.Count; i++)
                     {
-                        dbConnection.Open();
-                        string sqlQuery = String.Format(@"SELECT COUNT(Id) FROM dbo.[{0}] WHERE (ModifiedOn BETWEEN '{1}' AND '{2}')",
-                        jsonEntities[i].mssql, startDate.ToString("yyyy-MM-dd"), dueDate.ToString("yyyy-MM-dd"));
+                        if (dbConnection.State == ConnectionState.Closed)
+                        {
+                            dbConnection.Open();
+                        }
+                        string sqlQuery = String.Format(@"SELECT COUNT(Id) FROM dbo.[{0}] WHERE (ModifiedOn BETWEEN '{1}' AND '{2}');",
+                        jsonEntities[i].mssql, startDate.ToString("yyyy-MM-dd H:mm:ss"), dueDate.ToString("yyyy-MM-dd H:mm:ss"));
                         using (SqlCommand command = new SqlCommand(sqlQuery, dbConnection))
                         {
                             try
                             {
+                                command.CommandTimeout = 3000;
                                 using (SqlDataReader reader = command.ExecuteReader())
                                 {
                                     while (reader.Read())
@@ -87,13 +91,17 @@ namespace LostOrderUtils
                 {
                     for (int i = 0; i < jsonEntities.Count; i++)
                     {
-                        dbConnection.Open();
-                        string sqlQuery = String.Format(@"SELECT COUNT(Id) FROM {0} WHERE (ModifiedOn BETWEEN '{1}' AND '{2}')",
-                        jsonEntities[i].mysql, startDate.ToString("yyyy-MM-dd"), dueDate.ToString("yyyy-MM-dd"));
+                        if(dbConnection.State == ConnectionState.Closed)
+                        {
+                            dbConnection.Open();
+                        }
+                        string sqlQuery = String.Format(@"SELECT COUNT(Id) FROM {0} WHERE (ModifiedOn BETWEEN '{1}' AND '{2}');",
+                        jsonEntities[i].mysql, startDate.ToString("yyyy-MM-dd H:mm:ss"), dueDate.ToString("yyyy-MM-dd H:mm:ss"));
                         using (MySqlCommand command = new MySqlCommand(sqlQuery, dbConnection))
                         {
                             try
                             {
+                                command.CommandTimeout = 3000;
                                 using (MySqlDataReader reader = command.ExecuteReader())
                                 {
                                     while (reader.Read())
@@ -127,17 +135,20 @@ namespace LostOrderUtils
         {
             string tablesMySqlString = string.Join(",", jsonEntity.fields.Values);
             string sqlQuery = String.Format(@"SELECT {0} FROM {1} WHERE (ModifiedOn BETWEEN '{2}' AND '{3}') ORDER BY ModifiedOn ASC LIMIT {4} OFFSET {5}",
-                                            tablesMySqlString, jsonEntity.mysql, startDate.ToString("yyyy-MM-dd"),
-                                            dueDate.ToString("yyyy-MM-dd"), limit, offset);
+                                            tablesMySqlString, jsonEntity.mysql, startDate.ToString("yyyy-MM-dd H:mm:ss"),
+                                            dueDate.ToString("yyyy-MM-dd H:mm:ss"), limit, offset);
             List<string> rows = new List<string>();
-
             using (MySqlConnection dbConnection = new MySqlConnection(connectionStringMySql))
             {
                 try
                 {
-                    dbConnection.Open();
+                    if (dbConnection.State == ConnectionState.Closed)
+                    {
+                        dbConnection.Open();
+                    }
                     using (MySqlCommand command = new MySqlCommand(sqlQuery, dbConnection))
                     {
+                        command.CommandTimeout = 3000;
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -210,22 +221,28 @@ namespace LostOrderUtils
             {
                 try
                 {
-                    dbConnection.Open();
-                    for (int i = 0; i < mySqlData.Count; i++)
+                    if (dbConnection.State == ConnectionState.Closed)
                     {
-                        Console.WriteLine(mySqlData[i]);
-                        string sqlQuery = String.Format(@"INSERT INTO dbo.[{0}] ({1}) VALUES ({2});",
+                        dbConnection.Open();
+                    }
+                    string rowsQuery = "";
+  
+                    for(int i = 0; i < mySqlData.Count; i++)
+                    {
+                        rowsQuery += String.Format(@"INSERT INTO dbo.[{0}] ({1}) VALUES ({2});",
                         jsonEntity.mssql, tablesMsSqlString, mySqlData[i]);
-                        using (SqlCommand command = new SqlCommand(sqlQuery, dbConnection))
+                    }
+
+                    using (SqlCommand command = new SqlCommand(rowsQuery, dbConnection))
+                    {
+                        try
                         {
-                            try
-                            {
-                                command.ExecuteNonQuery();
-                            }
-                            catch (Exception exc)
-                            {
-                                Console.WriteLine(String.Format("Error. Message: {0}; Source: {1}", exc.Message, exc.Source));
-                            }
+                            command.CommandTimeout = 3000;
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception exc)
+                        {
+                            Console.WriteLine(String.Format("Error. Message: {0}; Source: {1}", exc.Message, exc.Source));
                         }
                     }
                 }
@@ -235,7 +252,7 @@ namespace LostOrderUtils
                 }
                 finally
                 {
-                    dbConnection.Close();
+                        dbConnection.Close();
                 }
             }
         }
@@ -245,20 +262,23 @@ namespace LostOrderUtils
         public List<string> GetMsSqlData(string connectionStringMsSql,
             JsonEntity jsonEntity, DateTime startDate, DateTime dueDate, int offset = 0, int limit = 100)
         {
-
             string tablesMsSqlString = string.Join(",", jsonEntity.fields.Keys);
             string sqlQuery = String.Format(@"SELECT {0} FROM dbo.[{1}] WHERE (ModifiedOn BETWEEN '{2}' AND '{3}') ORDER BY ModifiedOn ASC OFFSET {4} ROWS FETCH NEXT {5} ROWS ONLY",
-                                            tablesMsSqlString, jsonEntity.mssql, startDate.ToString("yyyy-MM-dd"),
-                                            dueDate.ToString("yyyy-MM-dd"), offset, limit);
+                                            tablesMsSqlString, jsonEntity.mssql, startDate.ToString("yyyy-MM-dd H:mm:ss"),
+                                            dueDate.ToString("yyyy-MM-dd H:mm:ss"), offset, limit);
             List<string> rows = new List<string>();
 
             using (SqlConnection dbConnection = new SqlConnection(connectionStringMsSql))
             {
                 try
                 {
-                    dbConnection.Open();
+                    if (dbConnection.State == ConnectionState.Closed)
+                    {
+                        dbConnection.Open();
+                    }
                     using (SqlCommand command = new SqlCommand(sqlQuery, dbConnection))
                     {
+                        command.CommandTimeout = 3000;
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -313,21 +333,29 @@ namespace LostOrderUtils
             {
                 try
                 {
-                    dbConnection.Open();
-                    for (int i = 0; i < msSqlData.Count; i++) {
-                        Console.WriteLine(msSqlData[i]);
-                        string sqlQuery = String.Format(@"INSERT IGNORE INTO {0} ({1}) VALUES ({2});",
+                    if (dbConnection.State == ConnectionState.Closed)
+                    {
+                        dbConnection.Open();
+                    }
+
+                    string rowsQuery = "";
+
+                    for (int i = 0; i < msSqlData.Count; i++)
+                    {
+                        rowsQuery += String.Format(@"INSERT IGNORE INTO {0} ({1}) VALUES ({2});",
                         jsonEntity.mysql, tablesMySqlString, msSqlData[i]);
-                        using (MySqlCommand command = new MySqlCommand(sqlQuery, dbConnection))
+                    }
+
+                    using (MySqlCommand command = new MySqlCommand(rowsQuery, dbConnection))
+                    {
+                        try
                         {
-                            try
-                            {
-                                command.ExecuteNonQuery();
-                            }
-                            catch (Exception exc)
-                            {
-                                Console.WriteLine(String.Format("Error. Message: {0}; Source: {1}", exc.Message, exc.Source));
-                            }
+                            command.CommandTimeout = 3000;
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception exc)
+                        {
+                            Console.WriteLine(String.Format("Error. Message: {0}; Source: {1}", exc.Message, exc.Source));
                         }
                     }
                 }
@@ -337,7 +365,7 @@ namespace LostOrderUtils
                 }
                 finally
                 {
-                    dbConnection.Close();
+                        dbConnection.Close();
                 }
             }
         }

@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Percona2BpmOrdersSync));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.countBar = new System.Windows.Forms.Label();
             this.inputMsServer = new System.Windows.Forms.TextBox();
             this.textBoxDateTo = new System.Windows.Forms.DateTimePicker();
             this.textBoxDateFrom = new System.Windows.Forms.DateTimePicker();
@@ -62,14 +63,20 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.packageSize = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logInfoDataGrid)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.packageSize)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.packageSize);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.countBar);
             this.groupBox1.Controls.Add(this.inputMsServer);
             this.groupBox1.Controls.Add(this.textBoxDateTo);
             this.groupBox1.Controls.Add(this.textBoxDateFrom);
@@ -98,6 +105,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Properties";
             // 
+            // countBar
+            // 
+            this.countBar.AutoSize = true;
+            this.countBar.Location = new System.Drawing.Point(500, 215);
+            this.countBar.Name = "countBar";
+            this.countBar.Size = new System.Drawing.Size(17, 18);
+            this.countBar.TabIndex = 22;
+            this.countBar.Text = "0";
+            // 
             // inputMsServer
             // 
             this.inputMsServer.Font = new System.Drawing.Font("Georgia", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -105,7 +121,7 @@
             this.inputMsServer.Name = "inputMsServer";
             this.inputMsServer.Size = new System.Drawing.Size(183, 25);
             this.inputMsServer.TabIndex = 21;
-            this.inputMsServer.Text = "dp-crmdbtest-01";
+            this.inputMsServer.Text = "10.1.208.94";
             // 
             // textBoxDateTo
             // 
@@ -127,17 +143,18 @@
             // 
             this.progressBar1.Location = new System.Drawing.Point(10, 215);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(638, 23);
-            this.progressBar1.Step = 100;
+            this.progressBar1.Size = new System.Drawing.Size(487, 23);
+            this.progressBar1.Step = 5000;
             this.progressBar1.TabIndex = 3;
+            this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
             // textBoxDllAddress
             // 
             this.textBoxDllAddress.Font = new System.Drawing.Font("Georgia", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxDllAddress.Location = new System.Drawing.Point(10, 168);
+            this.textBoxDllAddress.Location = new System.Drawing.Point(220, 168);
             this.textBoxDllAddress.Name = "textBoxDllAddress";
             this.textBoxDllAddress.ReadOnly = true;
-            this.textBoxDllAddress.Size = new System.Drawing.Size(450, 25);
+            this.textBoxDllAddress.Size = new System.Drawing.Size(277, 25);
             this.textBoxDllAddress.TabIndex = 18;
             this.textBoxDllAddress.Text = "Address of configuration file";
             // 
@@ -170,9 +187,10 @@
             // 
             this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button2.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(465, 168);
+            this.button2.ForeColor = System.Drawing.Color.Red;
+            this.button2.Location = new System.Drawing.Point(503, 168);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(183, 25);
+            this.button2.Size = new System.Drawing.Size(145, 25);
             this.button2.TabIndex = 17;
             this.button2.Text = "Get config";
             this.button2.UseVisualStyleBackColor = true;
@@ -193,7 +211,7 @@
             this.inputMyLogin.Font = new System.Drawing.Font("Georgia", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.inputMyLogin.Location = new System.Drawing.Point(349, 92);
             this.inputMyLogin.Name = "inputMyLogin";
-            this.inputMyLogin.Size = new System.Drawing.Size(110, 25);
+            this.inputMyLogin.Size = new System.Drawing.Size(111, 25);
             this.inputMyLogin.TabIndex = 14;
             this.inputMyLogin.Text = "cns";
             // 
@@ -204,7 +222,7 @@
             this.inputMyServer.Name = "inputMyServer";
             this.inputMyServer.Size = new System.Drawing.Size(183, 25);
             this.inputMyServer.TabIndex = 13;
-            this.inputMyServer.Text = "10.1.208.97";
+            this.inputMyServer.Text = "10.1.208.93";
             // 
             // inputMyName
             // 
@@ -213,7 +231,7 @@
             this.inputMyName.Name = "inputMyName";
             this.inputMyName.Size = new System.Drawing.Size(183, 25);
             this.inputMyName.TabIndex = 12;
-            this.inputMyName.Text = "prostor_test";
+            this.inputMyName.Text = "prostor_prod";
             // 
             // labelMyDBName
             // 
@@ -270,7 +288,7 @@
             // 
             this.labelDateFrom.AutoSize = true;
             this.labelDateFrom.Font = new System.Drawing.Font("Georgia", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelDateFrom.Location = new System.Drawing.Point(34, 131);
+            this.labelDateFrom.Location = new System.Drawing.Point(7, 131);
             this.labelDateFrom.Name = "labelDateFrom";
             this.labelDateFrom.Size = new System.Drawing.Size(81, 18);
             this.labelDateFrom.TabIndex = 4;
@@ -284,7 +302,7 @@
             this.inputMsName.Name = "inputMsName";
             this.inputMsName.Size = new System.Drawing.Size(183, 25);
             this.inputMsName.TabIndex = 2;
-            this.inputMsName.Text = "prostor_test";
+            this.inputMsName.Text = "prostor";
             this.inputMsName.TextChanged += new System.EventHandler(this.inputMsName_TextChanged);
             // 
             // labelMsDBName
@@ -426,6 +444,45 @@
             this.pictureBox1.TabIndex = 19;
             this.pictureBox1.TabStop = false;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Georgia", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(7, 170);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(96, 18);
+            this.label5.TabIndex = 23;
+            this.label5.Text = "Package size:";
+            // 
+            // packageSize
+            // 
+            this.packageSize.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.packageSize.Location = new System.Drawing.Point(126, 168);
+            this.packageSize.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.packageSize.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.packageSize.Name = "packageSize";
+            this.packageSize.Size = new System.Drawing.Size(88, 25);
+            this.packageSize.TabIndex = 24;
+            this.packageSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.packageSize.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.packageSize.ValueChanged += new System.EventHandler(this.packageSize_ValueChanged);
+            // 
             // Percona2BpmOrdersSync
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -446,6 +503,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.logInfoDataGrid)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.packageSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -485,6 +543,9 @@
         private System.Windows.Forms.DateTimePicker textBoxDateFrom;
         private System.Windows.Forms.TextBox inputMsServer;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label countBar;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown packageSize;
     }
 }
 
