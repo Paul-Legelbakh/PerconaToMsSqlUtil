@@ -620,7 +620,8 @@ namespace LostOrderUtils
 
         private void packageSize_ValueChanged(object sender, EventArgs e)
         {
-            if(packageSize.Value >= 3000) LogInfo(String.Format("Warning! This value may overburden the CPU :: " + packageSize.Value));
+            if (packageSize.Value < 1000) LogInfo("Warning! This value may slow down the work process :: " + packageSize.Value);
+            if (packageSize.Value >= 3000) LogInfo("Warning! This value may overburden the CPU :: " + packageSize.Value);
         }
 
         private void button3_Click(object sender, EventArgs e)

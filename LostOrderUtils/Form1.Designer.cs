@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Percona2BpmOrdersSync));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.packageSize = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
             this.countBar = new System.Windows.Forms.Label();
             this.inputMsServer = new System.Windows.Forms.TextBox();
             this.textBoxDateTo = new System.Windows.Forms.DateTimePicker();
@@ -63,13 +65,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.packageSize = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.packageSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logInfoDataGrid)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.packageSize)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -104,6 +104,45 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Properties";
+            // 
+            // packageSize
+            // 
+            this.packageSize.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.packageSize.Location = new System.Drawing.Point(126, 168);
+            this.packageSize.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.packageSize.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.packageSize.Name = "packageSize";
+            this.packageSize.Size = new System.Drawing.Size(88, 25);
+            this.packageSize.TabIndex = 24;
+            this.packageSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.packageSize.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.packageSize.ValueChanged += new System.EventHandler(this.packageSize_ValueChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Georgia", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(7, 170);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(96, 18);
+            this.label5.TabIndex = 23;
+            this.label5.Text = "Package size:";
             // 
             // countBar
             // 
@@ -444,45 +483,6 @@
             this.pictureBox1.TabIndex = 19;
             this.pictureBox1.TabStop = false;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Georgia", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(7, 170);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(96, 18);
-            this.label5.TabIndex = 23;
-            this.label5.Text = "Package size:";
-            // 
-            // packageSize
-            // 
-            this.packageSize.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.packageSize.Location = new System.Drawing.Point(126, 168);
-            this.packageSize.Maximum = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
-            this.packageSize.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.packageSize.Name = "packageSize";
-            this.packageSize.Size = new System.Drawing.Size(88, 25);
-            this.packageSize.TabIndex = 24;
-            this.packageSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.packageSize.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.packageSize.ValueChanged += new System.EventHandler(this.packageSize_ValueChanged);
-            // 
             // Percona2BpmOrdersSync
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -495,15 +495,16 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Percona2BpmOrdersSync";
-            this.Text = "Percona2MsSql Orders Sync";
+            this.Text = "ConsimpleDatabasesSync";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.packageSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.logInfoDataGrid)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.packageSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
